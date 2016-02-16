@@ -1,0 +1,5 @@
+// launch the macro on a 2nd degree profile
+
+VERSION BUILD=8820413 RECORDER=FX
+WAIT SECONDS=5
+TAG POS=1 TYPE=A ATTR=TXT:View<SP>next<SP>search<SP>result

@@ -1,0 +1,32 @@
+{% assign delta_members = customer["Group max_members"] | minus : customer["Group members_nb"]  %}
+{% assign delta_alerts = customer["Group max_alerts"] | minus :  customer["Group alert_nb"] %}
+
+
+{% if delta_members >= 1 or delta_alerts >= 1 %}
+	<p>I like to look at our customer's account usage from time to time, and I had a look at yours. <br> I was surprised, because it seems that {% if customer["Group company_name"] %}at {{customer["Group company_name"]}}{%endif%} you are not using
+	{% if customer.plan contains "starter" or customer.plan contains "growth" or customer.plan contains "company" or customer.plan contains "Business_1" or customer.plan contains "pro10000" or customer.plan contains "premium" or customer.plan contains "Business_2" %} your {{customer.plan}} plan{%else%}it{%endif%} to its full potential. Do you know
+	{% if delta_members >= 1 and delta_alerts >= 1 %}
+		you can still add {{delta_members }}
+		{% if delta_members == 1 %}user{% else %}team members
+		{% endif %} and {{delta_alerts}}
+		{% if delta_alerts == 1 %}alert{% else %}alerts
+		{% endif %} in your plan? Most successful Mention {{customer.job_position}} users create an alert for their company (or brand), their name and at least one competitor. <br>Hey, here's the link to <a href= "https://web.mention.com/#alert/new">create an alert </a> or <a href= "https://web.mention.com/#team/member/new">add a team member</a>.</p>
+
+	{% elsif delta_alerts >= 1 %}
+		you can still create {{delta_alerts}}
+		{% if delta_alerts == 1 %}alert{% else %}alerts
+		{% endif %} in your plan? Most successful Mention users create an alert for their company (or brand), their name and at least one competitor. <br>Hey, here's the link to <a href= "https://web.mention.com/#alert/new">create an alert now</a>.</p>
+
+	{% elsif delta_members >= 1 %}
+		you can still add {{delta_members }}
+		{% if delta_members == 1 %}user{% else %}team members
+		{% endif %} in your plan? Our most successful users collaborate with their team members in real time and assign tasks to make sure questions get answered by the right people. <br>Hey, here's the link to <a href= "https://web.mention.com/#team/member/new">add a team member now</a>.</p>
+	{% endif %}
+
+{% elsif max_members == customer["Group members_nb"] and max_alerts == customer["Group alert_nb"]%}
+<p>I had a look at your account in our CRM, and it seems that you had maxed out your {{customer.plan}} plan with {{delta_members }}
+	{% if delta_members == 1 %}user{% else %}team members
+	{% endif %} and {{delta_alerts}}
+	{% if delta_alerts == 1 %}alert{% else %}alerts
+	{% endif %}. Good going!</p>
+{% endif %}
